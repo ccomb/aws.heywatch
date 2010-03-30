@@ -9,6 +9,9 @@ Hey!Watch is an online video encoding service.
 This package allows to upload a video to Hey!Watch, let them encode the video,
 then retrieve and store the encoded file.
 
+First implementation has been done for the "WaveBack" project.
+http://waveback.net
+
 It provides several components:
 
 - a heywatch library to use heywatch
