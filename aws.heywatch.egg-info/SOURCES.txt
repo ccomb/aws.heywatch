@@ -1,0 +1,14 @@
+README.txt
+setup.py
+aws/__init__.py
+aws.heywatch.egg-info/PKG-INFO
+aws.heywatch.egg-info/SOURCES.txt
+aws.heywatch.egg-info/dependency_links.txt
+aws.heywatch.egg-info/entry_points.txt
+aws.heywatch.egg-info/namespace_packages.txt
+aws.heywatch.egg-info/not-zip-safe
+aws.heywatch.egg-info/requires.txt
+aws.heywatch.egg-info/top_level.txt
+aws/heywatch/__init__.py
+aws/heywatch/tests.py
+aws/heywatch/zope2.py
