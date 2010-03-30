@@ -24,6 +24,9 @@ It provides several components:
 
 Uploading is done asynchronously with zc.async
 
+To use this component, you must configure your Heywatch user:pass in the
+~/.heywatch file.
+
 Heywatch library
 ----------------
 
@@ -40,7 +43,6 @@ We can authenticate:
 </account>
 </account>
 <BLANKLINE>
-
 
 
 
