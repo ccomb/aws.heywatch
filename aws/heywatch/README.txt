@@ -24,12 +24,25 @@ Uploading is done asynchronously with zc.async
 Heywatch library
 ----------------
 
->>> from aws.heywatch import heywatch
->>> heywatch
+>>> from aws.heywatch.heywatch import HeyWatchService
+
+We can authenticate:
+
+>>> heywatch = HeyWatchService()
+>>> heywatch.account #doctest: +ELLIPSIS
+<?xml version="1.0" encoding="UTF-8"?>
+<account>
+<user>
+...
+</account>
+</account>
+<BLANKLINE>
 
 
-HeyWatch interace
------------------
+
+
+HeyWatch interface
+------------------
 
 The HeyWatch interface exposes the available features added to a video file:
 
