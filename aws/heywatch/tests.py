@@ -1,4 +1,5 @@
 import unittest
+import doctest
 
 from zope.testing import doctestunit
 from zope.component import testing
@@ -10,7 +11,8 @@ def test_suite():
         # Unit tests for your API
         doctestunit.DocFileSuite(
             'README.txt', package='aws.heywatch',
-            setUp=testing.setUp, tearDown=testing.tearDown),
+            setUp=testing.setUp, tearDown=testing.tearDown,
+            optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE),
 
         #doctestunit.DocTestSuite(
         #    module='aws.heywatch.mymodule',

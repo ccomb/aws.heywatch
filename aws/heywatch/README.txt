@@ -1,5 +1,5 @@
 aws.heywatch Package Readme
-=========================
+===========================
 
 Overview
 --------
@@ -9,12 +9,12 @@ Hey!Watch is an online video encoding service.
 This package allows to upload a video to Hey!Watch, let them encode the video,
 then retrieve and store the encoded file.
 
-First implementation has been done for the "WaveBack" project.
+The first implementation has been done for the "WaveBack" project.
 http://waveback.net
 
 It provides several components:
 
-- a heywatch library to use heywatch
+- a heywatch module to use heywatch
 - a zope interface exposing heywatch features
 - a global utility to access heywatch
 - an adapter on video files to provide heywatch features
@@ -35,12 +35,54 @@ Heywatch library
 We can get the account info:
 
 >>> heywatch = HeyWatchService()
->>> heywatch.account # doctest: +ELLIPSIS
+>>> heywatch.get_account()
 <Element account at ...>
->>> heywatch.account.user.firstname.tag
+>>> heywatch.get_account().user.firstname.tag
 'firstname'
->>> type(heywatch.account.user.firstname)
+>>> type(heywatch.get_account().user.firstname)
 <type 'lxml.objectify.StringElement'>
+
+Job info:
+
+>>> heywatch.get_jobs()
+<Element nil-classes at ...>
+
+Encoded videos:
+
+>>> heywatch.get_encoded_videos()
+<Element nil-classes at ...>
+
+A specific video:
+
+
+your videos:
+
+>>> heywatch.get_videos()
+<Element nil-classes at ...>
+
+A specific video:
+
+
+
+Format:
+
+>>> heywatch.get_formats()
+<Element formats at ...>
+>>> heywatch.get_formats().getchildren()[0]
+<Element format-specs at ...>
+
+Upload:
+
+>>> heywatch.upload()
+Traceback (most recent call last):
+...
+NotImplementedError
+
+
+Downloads:
+
+>>> heywatch.get_downloads()
+<Element nil-classes at ...>
 
 
 

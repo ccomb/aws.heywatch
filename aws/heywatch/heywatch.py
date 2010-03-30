@@ -7,7 +7,6 @@ import string
 import urllib2
 import time
 
-ACCOUNT_URL = 'http://heywatch.com/account.xml'
 URL = 'http://heywatch.com/'
 REALM = 'Web Password'
 TIMEOUT = 60 # cache timeout
@@ -25,19 +24,98 @@ auth_handler.add_password(REALM, URL, USER, PASS)
 opener = urllib2.build_opener(auth_handler)
 urllib2.install_opener(opener)
 
+
 class HeyWatchService(object):
 
-    _account = (0,'') # (access_time, value)
+    _cache = {} # {'account': (access_time, value), }
 
-    def _get_account(self):
-        access_time, value = self._account
-        if time.time() - access_time > TIMEOUT:
-            request = RestfulRequest(ACCOUNT_URL, method='GET')
+    def _get(self, service, timeout=0):
+        """get a possibly cached value by HTTP GET
+        """
+        access_time, value = self._cache.get(service, (0, ''))
+        if time.time() - access_time > timeout:
+            request = RestfulRequest(URL+service, method='GET')
             response = urllib2.urlopen(request)
             value = response.read()
-            self._account = (time.time(), value)
+            self._cache[service] = (time.time(), value)
+        return value
 
-
+    def get_account(self):
+        """get account information
+        """
+        value = self._get('account.xml', 60)
         return objectify.parse(StringIO(value)).getroot()
 
-    account = property(_get_account)
+    def get_encoded_videos(self):
+        """Get information about your encoded videos
+        """
+        value = self._get('encoded_video.xml', 10)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_encoded_video(self, id):
+        """Get information about a specific encoded video
+        id is the HeyWatch identifier of the video (int or str)
+        """
+        assert(str(id).isdigit())
+        value = self._get('encoded_video/%s.xml' % str(id), 10)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_videos(self):
+        """Get information about your encoded videos
+        """
+        value = self._get('video.xml', 30)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_video(self, id):
+        """Get information about a specific video
+        id is the HeyWatch identifier of the video (int or str)
+        """
+        assert(str(id).isdigit())
+        value = self._get('video/%s.xml' % str(id), 10)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_formats(self):
+        """Get information about all formats
+        """
+        value = self._get('format.xml', 60)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_format(self, id):
+        """Get information about a specific format
+        id is the HeyWatch identifier of the format (int or str)
+        """
+        assert(str(id).isdigit())
+        value = self._get('format/%s.xml' % str(id))
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_jobs(self):
+        """Get information about all jobs
+        """
+        value = self._get('job.xml', 10)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_job(self, id):
+        """Get information about a specific job
+        id is the HeyWatch identifier of the job (int or str)
+        """
+        assert(str(id).isdigit())
+        value = self._get('job/%s.xml' % str(id), 10)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_downloads(self):
+        """Get information about all downloads
+        """
+        value = self._get('download.xml', 10)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def get_download(self, id):
+        """Get information about a specific download
+        id is the HeyWatch identifier of the job (int or str)
+        """
+        assert(str(id).isdigit())
+        value = self._get('download/%s.xml' % str(id), 10)
+        return objectify.parse(StringIO(value)).getroot()
+
+    def upload(self):
+        raise NotImplementedError
+
