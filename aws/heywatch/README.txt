@@ -4,11 +4,39 @@ aws.heywatch Package Readme
 Overview
 --------
 
+Hey!Watch is an online video encoding service.
+
+This package allows to upload a video to Hey!Watch, let them encode the video,
+then retrieve and store the encoded file.
+
+It provides several components:
+
+- a heywatch library to use heywatch
+- a zope interface exposing heywatch features
+- a global utility to access heywatch
+- an adapter on video files to provide heywatch features
+- a content provider to display the upload and conversion status
+- an upload content provider to send directly to heywatch without storing the
+  original video.
+
+Uploading is done asynchronously with zc.async
+
+Heywatch library
+----------------
+
+>>> from aws.heywatch import heywatch
+>>> heywatch
+
+
+HeyWatch interace
+-----------------
+
+The HeyWatch interface exposes the available features added to a video file:
+
+>>> from aws.heywatch.interfaces import IHeyWatch
+>>> IHeyWatch
+<InterfaceClass aws.heywatch.interfaces.IHeyWatch>
 
 
 
-Your tests here
----------------
 
-    >>> 1 + 1
-    3

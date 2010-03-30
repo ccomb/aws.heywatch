@@ -23,6 +23,7 @@ setup(name='aws.heywatch',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'zope.component',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
