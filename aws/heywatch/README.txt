@@ -32,17 +32,15 @@ Heywatch library
 
 >>> from aws.heywatch.heywatch import HeyWatchService
 
-We can authenticate:
+We can get the account info:
 
 >>> heywatch = HeyWatchService()
->>> heywatch.account #doctest: +ELLIPSIS
-<?xml version="1.0" encoding="UTF-8"?>
-<account>
-<user>
-...
-</account>
-</account>
-<BLANKLINE>
+>>> heywatch.account # doctest: +ELLIPSIS
+<Element account at ...>
+>>> heywatch.account.user.firstname.tag
+'firstname'
+>>> type(heywatch.account.user.firstname)
+<type 'lxml.objectify.StringElement'>
 
 
 

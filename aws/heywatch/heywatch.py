@@ -1,4 +1,7 @@
 from restlib import RestfulRequest
+from cStringIO import StringIO
+from lxml import etree
+from lxml import objectify
 import os
 import string
 import urllib2
@@ -32,6 +35,9 @@ class HeyWatchService(object):
             request = RestfulRequest(ACCOUNT_URL, method='GET')
             response = urllib2.urlopen(request)
             value = response.read()
-        print value
+            self._account = (time.time(), value)
+
+
+        return objectify.parse(StringIO(value)).getroot()
 
     account = property(_get_account)

@@ -25,6 +25,7 @@ setup(name='aws.heywatch',
           'setuptools',
           'zope.component',
           'restlib',
+          'lxml',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

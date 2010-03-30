@@ -1,10 +1,10 @@
 Metadata-Version: 1.0
 Name: aws.heywatch
 Version: 1.0
-Summary: UNKNOWN
-Home-page: http://svn.plone.org/svn/collective/
-Author: UNKNOWN
-Author-email: UNKNOWN
+Summary: Access Hey!Watch services from your application
+Home-page: UNKNOWN
+Author: Christophe Combelles
+Author-email: christophe.combelles@alterway.fr
 License: GPL
 Description: Introduction
         ============
@@ -19,5 +19,6 @@ Description: Introduction
         
         - Initial release
         
+Keywords: heywatch
 Platform: UNKNOWN
 Classifier: Programming Language :: Python

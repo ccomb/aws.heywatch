@@ -1,3 +1,4 @@
 setuptools
 zope.component
 restlib
+lxml
