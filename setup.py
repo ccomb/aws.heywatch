@@ -26,6 +26,12 @@ setup(name='aws.heywatch',
           'zope.component',
           'restlib',
           'lxml',
+          'zope.publisher',
+          'zope.contentprovider',
+          'zope.app.pagetemplate',
+          'zope.interface',
+          'zope.component',
+          'zope.app.container',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

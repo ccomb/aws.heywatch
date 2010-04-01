@@ -1,8 +1,8 @@
 Integration with Zope
 =====================
 
-HeyWatch interface
-------------------
+HeyWatch interface and adapter
+------------------------------
 
 The HeyWatch interface exposes the available features added to a video file:
 
@@ -40,6 +40,33 @@ Now we have a IHeyWatch adapter on this object:
 ...                                        IHeyWatch)
 >>> IHeyWatch(mysample)
 <aws.heywatch.adapters.HeyWatch object at ...>
+
+
+Upload content provider
+-----------------------
+
+An upload content provider is included. It applies to container objects, any
+views, and send data directly to HeyWatch.
+
+>>> from aws.heywatch.views import DirectUpload
+>>> from zope.publisher.browser import TestRequest
+>>> from zope.publisher.browser import BrowserView
+
+>>> anyrequest = TestRequest()
+>>> anyview = BrowserView(mysample, anyrequest)
+
+Wa call the view
+
+>>> DirectUpload(mysample, anyrequest, anyview).update()
+>>> print DirectUpload(mysample, anyrequest, anyview).render()
+<form action="" method="post">
+  <input type="file" name="heywatch_upload_file" />
+  <input type="submit" name="heywatch_upload_submit" />
+</form>
+
+
+
+
 
 
 
