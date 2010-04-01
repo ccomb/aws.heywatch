@@ -22,6 +22,8 @@ plone.app.blob.IATBlob:
 >>> class Sample(object):
 ...     title = 'some title'
 ...     blob = 'some data'
+...     __parent__ = None
+...     __name__ = 'the_sample'
 
 >>> from zope.interface import classImplements
 >>> classImplements(Sample, IHeyWatchable)
@@ -35,9 +37,14 @@ Now we have a IHeyWatch adapter on this object:
 
 >>> from aws.heywatch.adapters import HeyWatch
 >>> from zope.component import getGlobalSiteManager
->>> getGlobalSiteManager().registerAdapter(HeyWatch,
-...                                        (IHeyWatchable,),
-...                                        IHeyWatch)
+>>> getGlobalSiteManager().registerAdapter(HeyWatch)
+
+We also have to register the standard annotations adapter
+(normally done in ZCML)
+
+>>> from zope.annotation.attribute import AttributeAnnotations
+>>> getGlobalSiteManager().registerAdapter(AttributeAnnotations)
+
 >>> IHeyWatch(mysample)
 <aws.heywatch.adapters.HeyWatch object at ...>
 
@@ -49,23 +56,43 @@ An upload content provider is included. It applies to container objects, any
 views, and send data directly to HeyWatch.
 
 >>> from aws.heywatch.views import DirectUpload
->>> from zope.publisher.browser import TestRequest
->>> from zope.publisher.browser import BrowserView
+>>> from zope.publisher.browser import TestRequest, BrowserView
 
 >>> anyrequest = TestRequest()
 >>> anyview = BrowserView(mysample, anyrequest)
 
-Wa call the view
+We call the view
 
 >>> DirectUpload(mysample, anyrequest, anyview).update()
 >>> print DirectUpload(mysample, anyrequest, anyview).render()
 <form action="" method="post">
   <input type="file" name="heywatch_upload_file" />
-  <input type="submit" name="heywatch_upload_submit" />
+  <input type="submit" name="heywatch_upload_submit" value="submit" />
+  <input type="hidden" name="heywatch_video_id" value="the_sample" />
 </form>
 
 
+Ping URL
+--------
 
+When data is transcoded, HeyWatch should call a specific URL that you have
+configured in the HeyWatch admin panel. This URL should trigger the download
+of both the original video and the transcoded video, and store them.
+
+>>> from aws.heywatch.views import UploadPingHandler
+
+We create a POST request with heywatch ping data
+
+>>> pingrequest = TestRequest(
+...                 heywatch_video_id='the_sample',
+...                 form={
+...                 'upload_id': 1554564,
+...                 'video_id': 3251 },)
+
+We call the ping view, which is contextless. 
+
+>>> response = UploadPingHandler(mysample, pingrequest)()
+ok
 
 
 

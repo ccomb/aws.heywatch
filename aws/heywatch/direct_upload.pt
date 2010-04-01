@@ -1,4 +1,6 @@
 <form action="" method="post">
-<input type="file" name="heywatch_upload_file" />
-<input type="submit" name="heywatch_upload_submit" />
+  <input type="file" name="heywatch_upload_file" />
+  <input type="submit" name="heywatch_upload_submit" value="submit" />
+  <input type="hidden" name="heywatch_video_id" value="#"
+         tal:attributes="value python:view.id" />
 </form>
