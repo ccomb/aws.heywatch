@@ -1,0 +1,62 @@
+Heywatch module
+===============
+
+>>> import aws.heywatch.heywatch
+
+We can get the account info:
+
+>>> heywatch = aws.heywatch.heywatch.HeyWatchService()
+>>> heywatch.get_account()
+<Element account at ...>
+>>> heywatch.get_account().user.firstname.tag
+'firstname'
+>>> type(heywatch.get_account().user.firstname)
+<type 'lxml.objectify.StringElement'>
+
+Job info:
+
+>>> heywatch.get_jobs()
+<Element nil-classes at ...>
+
+Encoded videos:
+
+>>> heywatch.get_encoded_videos()
+<Element nil-classes at ...>
+
+A specific video:
+
+
+your videos:
+
+>>> heywatch.get_videos()
+<Element nil-classes at ...>
+
+A specific video:
+
+
+
+Format:
+
+>>> heywatch.get_formats()
+<Element formats at ...>
+>>> heywatch.get_formats().getchildren()[0]
+<Element format-specs at ...>
+
+Upload a sample video:
+
+>>> from os.path import dirname, join
+>>> samplefile = join(dirname(aws.heywatch.heywatch.__file__), 'sample.ogg')
+>>> data = open(samplefile).read()
+>>> heywatch.upload(data)
+Traceback (most recent call last):
+...
+NotImplementedError
+
+
+Downloads:
+
+>>> heywatch.get_downloads()
+<Element nil-classes at ...>
+
+
+

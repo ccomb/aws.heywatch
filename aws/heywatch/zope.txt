@@ -1,0 +1,53 @@
+Integration with Zope
+=====================
+
+HeyWatch interface
+------------------
+
+The HeyWatch interface exposes the available features added to a video file:
+
+>>> from aws.heywatch.interfaces import IHeyWatch
+>>> IHeyWatch
+<InterfaceClass aws.heywatch.interfaces.IHeyWatch>
+
+To be able to retrieve an adapter or a heywatch view, we have a marker interface
+to tag an object with heywatch capability:
+
+>>> from aws.heywatch.interfaces import IHeyWatchable
+
+Then we can create an arbitraty object and let it provide
+this interface. As an example, we use an interface similar to
+plone.app.blob.IATBlob:
+
+>>> class Sample(object):
+...     title = 'some title'
+...     blob = 'some data'
+
+>>> from zope.interface import classImplements
+>>> classImplements(Sample, IHeyWatchable)
+
+We create an instance:
+
+>>> mysample = Sample()
+
+Now we have a IHeyWatch adapter on this object:
+(we first register it)
+
+>>> from aws.heywatch.adapters import HeyWatch
+>>> from zope.component import getGlobalSiteManager
+>>> getGlobalSiteManager().registerAdapter(HeyWatch,
+...                                        (IHeyWatchable,),
+...                                        IHeyWatch)
+>>> IHeyWatch(mysample)
+<aws.heywatch.adapters.HeyWatch object at ...>
+
+
+
+
+
+
+
+
+
+
+

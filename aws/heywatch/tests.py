@@ -10,7 +10,12 @@ def test_suite():
 
         # Unit tests for your API
         doctestunit.DocFileSuite(
-            'README.txt', package='aws.heywatch',
+            'zope.txt', package='aws.heywatch',
+            setUp=testing.setUp, tearDown=testing.tearDown,
+            optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE),
+
+        doctestunit.DocFileSuite(
+            'heywatch.txt', package='aws.heywatch',
             setUp=testing.setUp, tearDown=testing.tearDown,
             optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE),
 

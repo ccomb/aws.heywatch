@@ -9,7 +9,6 @@ import time
 
 URL = 'http://heywatch.com/'
 REALM = 'Web Password'
-TIMEOUT = 60 # cache timeout
 
 # read the heywatch user/pass from the user's home
 CONFIG = os.path.join(os.path.expanduser('~'), '.heywatch')
@@ -29,15 +28,23 @@ class HeyWatchService(object):
 
     _cache = {} # {'account': (access_time, value), }
 
-    def _get(self, service, timeout=0):
+    def _get(self, service, cache_timeout=0):
         """get a possibly cached value by HTTP GET
         """
         access_time, value = self._cache.get(service, (0, ''))
-        if time.time() - access_time > timeout:
+        if time.time() - access_time > cache_timeout:
             request = RestfulRequest(URL+service, method='GET')
             response = urllib2.urlopen(request)
             value = response.read()
             self._cache[service] = (time.time(), value)
+        return value
+
+    def _post(self, service, data):
+        """send values by HTTP POST
+        """
+        request = RestfulRequest(URL+service, data=data, method='POST')
+        response = urllib2.urlopen(request)
+        value = response.read()
         return value
 
     def get_account(self):
@@ -116,6 +123,10 @@ class HeyWatchService(object):
         value = self._get('download/%s.xml' % str(id), 10)
         return objectify.parse(StringIO(value)).getroot()
 
-    def upload(self):
+    def upload(self, data, title='', max_length=None):
         raise NotImplementedError
+        #value = self._post('upload.xml', data)
+        #return value
+
+
 
