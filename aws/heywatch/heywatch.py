@@ -1,25 +1,30 @@
-from restlib import RestfulRequest
+from ConfigParser import ConfigParser
 from cStringIO import StringIO
 from lxml import etree
 from lxml import objectify
+from restlib import RestfulRequest
 import os
 import string
-import urllib2
 import time
+import urllib2
 
 URL = 'http://heywatch.com/'
 REALM = 'Web Password'
 
 # read the heywatch user/pass from the user's home
-CONFIG = os.path.join(os.path.expanduser('~'), '.heywatch')
-if not os.path.exists(CONFIG):
+configpath = os.path.join(os.path.expanduser('~'), '.particles')
+if not os.path.exists(configpath):
     raise IOError(u'Please provide a config file %s containing user:pass' % CONFIG)
-
-USER, PASS = map(string.strip, open(CONFIG).read().split(':'))
+CONFIG = ConfigParser()
+CONFIG.read(configpath)
 
 
 auth_handler = urllib2.HTTPBasicAuthHandler()
-auth_handler.add_password(REALM, URL, USER, PASS)
+auth_handler.add_password(
+    REALM,
+    URL,
+    CONFIG.get('heywatch', 'username'),
+    CONFIG.get('heywatch', 'password'))
 opener = urllib2.build_opener(auth_handler)
 urllib2.install_opener(opener)
 

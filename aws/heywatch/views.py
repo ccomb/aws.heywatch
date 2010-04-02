@@ -6,6 +6,7 @@ from zope.interface import implements, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.publisher.browser import BrowserView
 from interfaces import IHeyWatch
+from aws.heywatch.heywatch import CONFIG
 
 class DirectUpload(object):
     implements(IContentProvider)
@@ -16,10 +17,11 @@ class DirectUpload(object):
         self.context = context
         self.request = request
 
-        self.id = self.context.__name__
-
     def update(self):
-        pass
+        """prepare values for the template
+        """
+        self.video_id = self.context.__name__
+        self.upload_key = CONFIG.get('heywatch', 'upload_key')
 
     render = ViewPageTemplateFile('direct_upload.pt')
 

@@ -1,6 +1,25 @@
-<form action="" method="post">
-  <input type="file" name="heywatch_upload_file" />
-  <input type="submit" name="heywatch_upload_submit" value="submit" />
-  <input type="hidden" name="heywatch_video_id" value="#"
-         tal:attributes="value python:view.id" />
+<form action="http://heywatch.com/upload"
+      enctype="multipart/form-data"
+      method="post" >
+  <input type="hidden"
+         value="YOUR_UPLOAD_KEY"
+         tal:attributes="value python:view.upload_key"
+         name="key" />
+  <input type="hidden"
+         value="http://yoursite.com/upload_success.php"
+         name="redirect_if_success" />
+  <input type="hidden"
+         value="http://yoursite.com/upload_error.php"
+         name="redirect_if_error" />
+  <input type="hidden"
+         name="heywatch_video_id"
+         value="#" tal:attributes="value python:view.video_id" />
+  <p>
+    <input id="data" name="data" type="file" />
+  </p>
+  <p>
+    <input name="commit"
+            type="submit"
+            value="Upload" />
+  </p>
 </form>
