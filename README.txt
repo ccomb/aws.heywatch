@@ -10,7 +10,7 @@ This package allows to upload a video to Hey!Watch, let them encode the video,
 then retrieve and store the encoded file.
 
 The first implementation has been done for the "WaveBack" project.
-http://waveback.net
+http://waveback.pro
 
 It provides several components:
 
