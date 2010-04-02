@@ -11,7 +11,7 @@ The HeyWatch interface exposes the available features added to a video file:
 <InterfaceClass aws.heywatch.interfaces.IHeyWatch>
 
 To be able to retrieve an adapter or a heywatch view, we have a marker interface
-to tag an object with heywatch capability:
+to tag any object with heywatch capability:
 
 >>> from aws.heywatch.interfaces import IHeyWatchable
 
@@ -45,9 +45,16 @@ We also have to register the standard annotations adapter
 >>> from zope.annotation.attribute import AttributeAnnotations
 >>> getGlobalSiteManager().registerAdapter(AttributeAnnotations)
 
+Now we can retrieve our adapter:
+
 >>> IHeyWatch(mysample)
 <aws.heywatch.adapters.HeyWatch object at ...>
 
+The adapter is an annotation adapter that stores additional data:
+
+>>> IHeyWatch(mysample).foobar = 'baz'
+>>> print list(mysample.__annotations__.items())
+[('aws.heywatch.adapters.HeyWatch', <aws.heywatch.adapters.HeyWatch object at ...>)]
 
 Upload content provider
 -----------------------
