@@ -5,7 +5,6 @@ from persistent import Persistent
 import zope.annotation
 from zope.annotation.interfaces import IAttributeAnnotatable
 
-@zope.annotation.factory
 class HeyWatch(Persistent):
     """adapter providing IHeyWatch features for IHeyWatchable objects
     """
@@ -15,6 +14,6 @@ class HeyWatch(Persistent):
     def __init__(self):
         pass
 
-
+heywatchfactory = zope.annotation.factory(HeyWatch)
 
 

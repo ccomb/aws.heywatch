@@ -47,8 +47,11 @@ class UploadPingHandler(BrowserView):
             IHeyWatch(self.context).download_id = upload_id
             IHeyWatch(self.context).video_id = video_id
 
-            queue = IQueue(self.context)
-            job = queue.put(Job(video_downloader, self, upload_id, video_id))
+        print 'todo'
+
+            #queue = IQueue(self.context)
+            #job = queue.put(Job(video_downloader, self, upload_id, video_id))
+
             # we don't download now otherwise the ids won't be stored if
             # download fails
 

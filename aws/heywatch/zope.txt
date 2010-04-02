@@ -65,9 +65,9 @@ We create an instance:
 Now we have a IHeyWatch adapter on this object:
 (we first register it)
 
->>> from aws.heywatch.adapters import HeyWatch
+>>> from aws.heywatch.adapters import heywatchfactory
 >>> from zope.component import getGlobalSiteManager
->>> getGlobalSiteManager().registerAdapter(HeyWatch)
+>>> getGlobalSiteManager().registerAdapter(heywatchfactory)
 
 We also have to register the standard annotations adapter
 (normally done in ZCML)
@@ -137,7 +137,14 @@ We create a POST request with heywatch ping data
 We call the ping view, which is contextless.
 
 >>> response = UploadPingHandler(mysample, pingrequest)()
-ok
+todo
+
+
+
+clean up
+
+    >>> zc.async.ftesting.tearDown()
+
 
 
 

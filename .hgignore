@@ -3,3 +3,5 @@
 bin/
 develop-eggs/
 .installed.cfg
+parts/
+aws.heywatch.egg-info/
