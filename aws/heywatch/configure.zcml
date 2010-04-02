@@ -1,7 +1,16 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five">
 
   <five:registerPackage package="." initialize=".zope2.initialize" />
+
+  <adapter factory=".views.DirectUpload" name="heywatch_upload_form" />
+
+  <browser:view name="upload_ping"
+                class=".views.UploadPingHandler"
+                for="zope.app.container.interfaces.IContainer"
+                permission="zope2.View"
+                layer="zope.publisher.interfaces.browser.IDefaultBrowserLayer" />
 
 </configure>

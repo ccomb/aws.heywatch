@@ -33,6 +33,7 @@ setup(name='aws.heywatch',
           'zope.component',
           'zope.app.container',
           'zope.traversing',
+          'zc.async',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

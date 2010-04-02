@@ -1,6 +1,36 @@
 Integration with Zope
 =====================
 
+We first setup zc.async to be able to do long upload or download tasks:
+
+    >>> import transaction
+    >>> import BTrees
+    >>> import ZODB.FileStorage, ZODB.blob
+    >>> from ZODB.DB import DB
+    >>> import tempfile
+
+    >>> import zc.async.configure
+    >>> zc.async.configure.base()
+    >>> import zc.async.queue
+    >>> from zope.component import getGlobalSiteManager
+    >>> getGlobalSiteManager().registerAdapter(zc.async.queue.getDefaultQueue)
+    >>> blobdir = tempfile.mkdtemp()
+    >>> storage = ZODB.blob.BlobStorage(blobdir, ZODB.FileStorage.FileStorage(
+    ...     'zc_async.fs', create=True))
+    >>> db = DB(storage)
+    >>> conn = db.open()
+    >>> root = conn.root()
+    >>> PseudoZopeRoot = root['Application'] = BTrees.family32.OO.BTree()
+    >>> transaction.commit()
+    >>> def _getRootObject():
+    ...     return PseudoZopeRoot
+    ...
+    >>> globals()['getRootFolder'] = _getRootObject
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+    >>> transaction.commit()
+
+
 HeyWatch interface and adapter
 ------------------------------
 
@@ -102,8 +132,7 @@ We create a POST request with heywatch ping data
 >>> pingrequest = TestRequest(
 ...                 heywatch_video_id='the_sample',
 ...                 form={
-...                 'upload_id': 1554564,
-...                 'video_id': 3251 },)
+...                 'upload_id': 1554564},)
 
 We call the ping view, which is contextless.
 
