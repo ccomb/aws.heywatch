@@ -123,7 +123,7 @@ Ping URL
 
 When data is transcoded, HeyWatch should call a specific URL that you have
 configured in the HeyWatch admin panel. This URL should trigger the download
-of both the original video and the transcoded video, and store them.
+of the original video and store it.
 
 >>> from aws.heywatch.views import UploadPingHandler
 

@@ -27,9 +27,11 @@ A specific video:
 
 
 your videos:
+# for this to work you must have at least one video in your account
 
 >>> heywatch.get_videos()
-<Element nil-classes at ...>
+<Element videos at ...>
+>>> video_id = heywatch.get_videos().video.id
 
 A specific video:
 
@@ -59,4 +61,7 @@ Downloads:
 <Element nil-classes at ...>
 
 
+Download a specific video
+
+>>> heywatch.download_video(video_id)
 

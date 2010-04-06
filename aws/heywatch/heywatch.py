@@ -128,6 +128,13 @@ class HeyWatchService(object):
         value = self._get('download/%s.xml' % str(id), 10)
         return objectify.parse(StringIO(value)).getroot()
 
+    def download_video(self, id):
+        """Download a specific original video
+        """
+        download = self._get('video/%s.bin' % str(id))
+        raise NotImplementedError
+
+
     def upload(self, data, title='', max_length=None):
         raise NotImplementedError
         #value = self._post('upload.xml', data)
